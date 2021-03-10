@@ -34,7 +34,7 @@ const login = async (req, res = response) => {
 
 
     } catch (err) {
-        console.log(err);
+       console.log('error en el catch')
         res.status(400).json({
             ok: false,
             msj: 'Error inesperado...!'

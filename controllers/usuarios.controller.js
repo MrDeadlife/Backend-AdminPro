@@ -4,14 +4,33 @@ const usuarioModel = require('../models/usuario.model');
 const generteJwt = require('../helpers/jwr');
 
 const getUser = async (req, res) => {
-    // solo hara el filtro mostrando el nombre  email google
-    const usuario = await usuarioModel.find({}, 'nombre email google');
+    //PAGINACION
+    const desde = Number(req.query.desde) || 0;
+    /*
+     es una mala practica poner un await despues de otro por eso se usa el promise.all
+     el cual ejecuta todo lo que esta dentro y devuelbe un arreglo de documentos
+     el cual se puede extraer con una desestructuracion de arreglo
+     // solo hara el filtro mostrando el nombre  email google
+     const usuario = await usuarioModel
+         .find({}, 'nombre email google')
+         .skip(desde) //desde pagina #
+         .limit(5); //limite de usuarios a mostrar
+     const total = await usuarioModel.count(); 
+     */
+    const [usuarios, totalUsuarios] = await Promise.all([
+        usuario = await usuarioModel
+            .find({}, 'nombre email google img ')
+            .skip(desde) //desde pagina #
+            .limit(5),
+        usuarioModel.countDocuments(),
+    ]);
     try {
-        if (usuario > 0) {
+        if (usuario => 0) {
             return res.json({
                 ok: true,
-                usuario,
-                uid: req.uid
+                usuarios,
+                uid: req.uid,
+                totalUsuarios
             });
             //req.uid viene del middleware validarjwt.js (usuario que hizo la peticion)
         } else if (usuario.length === 0) {
@@ -27,10 +46,6 @@ const getUser = async (req, res) => {
             err
         });
     }
-    res.json({
-        ok: true,
-        usuario
-    });
 };
 const createUser = async (req, res = response) => {
     const { name, password, email } = req.body;
@@ -54,7 +69,6 @@ const createUser = async (req, res = response) => {
             ok: true,
             usuario,
             token
-
         });
     } catch (error) {
         console.log(error);

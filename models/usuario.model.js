@@ -26,7 +26,7 @@ const usuarioSchema = Schema({
         default: false
     }
 
-});
+}, { collection: 'usuarios' });
 
 usuarioSchema.method('toJSON', function () {
     const { _v, _id, password, ...object } = this.toObject();
@@ -34,4 +34,4 @@ usuarioSchema.method('toJSON', function () {
     return object;
 })
 
-module.exports = model('usuario', usuarioSchema);   
+module.exports = model('usuarioModel', usuarioSchema);   

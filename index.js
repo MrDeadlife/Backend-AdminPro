@@ -12,12 +12,18 @@ app.use(cors());
 app.use(express.json());
 // Coneccion a base de datos
 dbConnection();
-//Rutas 
-app.use('/api/usuarios', require('./routes/usuarios.routes'));
-//Ruta de login
-app.use('/api/login', require('./routes/auth.routes'));
+//Rutas
+app.use('/api/login', require('./routes/auth.routes')); //Ruta de login
+app.use('/api/usuarios', require('./routes/usuarios.routes')); //Ruta de usuarios
+app.use('/api/hospitales', require('./routes/hospitales.routes'));//Ruta de hospitales
+app.use('/api/medicos', require('./routes/medicos.routes'));//Ruta de medicos
+app.use('/api/todo', require('./routes/busquedas.routes'));//Ruta de busqueda
+app.use('/api/todo', require('./routes/busquedas.routes'));//Ruta de busqueda por coleccion
+app.use('/api/uploads', require('./routes/upload.routes'));//Ruta de subir imagen
+
+
 // Puerto de coneccion
 app.listen(process.env.PORT, () => {
-    console.log('Servidor corriendo en el puerto 3000');
-})
+    console.log('Servidor corriendo en el puerto', process.env.PORT);
+});
 
