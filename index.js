@@ -12,6 +12,8 @@ app.use(cors());
 app.use(express.json());
 // Coneccion a base de datos
 dbConnection();
+//Directorio publico
+app.use(express.static('public'));
 //Rutas
 app.use('/api/login', require('./routes/auth.routes')); //Ruta de login
 app.use('/api/usuarios', require('./routes/usuarios.routes')); //Ruta de usuarios
