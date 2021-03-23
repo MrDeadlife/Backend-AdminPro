@@ -22,7 +22,9 @@ router.post('/', [
     check('name', 'El nombre es obligatorio').not().isEmpty(),
     validarCampos,
 ], createHospitales); // Ruta, middleware , controlador, funcion
-router.put('/:id', updateHospitales);
-router.delete('/:id', deleteHospitales);
+router.put('/:id', ValidateJwt,
+    updateHospitales);
+router.delete('/:id', ValidateJwt,
+    deleteHospitales);
 
 module.exports = router;

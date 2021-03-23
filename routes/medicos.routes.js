@@ -18,7 +18,9 @@ router.post('/', [
     check('hospital', 'El id no tiene un formato adecuado').isMongoId(),
     validarCampos,
 ], createMedicos); // Ruta, middleware , controlador, funcion
-router.put('/:id', updateMedicos);
-router.delete('/:id', deleteMedicos);
+router.put('/:id', ValidateJwt,
+    updateMedicos);
+router.delete('/:id', ValidateJwt,
+    deleteMedicos);
 
 module.exports = router;
